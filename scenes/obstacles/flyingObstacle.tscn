@@ -1,0 +1,86 @@
+[gd_scene load_steps=13 format=3 uid="uid://cv6hvwdkt185e"]
+
+[ext_resource type="Texture2D" uid="uid://cvr7p71s1yxus" path="res://sprites/obstacles/CrimsonFlyingEye_Flight.png" id="1_4581x"]
+[ext_resource type="Script" uid="uid://ct04bpa7ckpgm" path="res://scripts/flying_obstacle.gd" id="1_fpfe2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fpfe2"]
+atlas = ExtResource("1_4581x")
+region = Rect2(0, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rqtuh"]
+atlas = ExtResource("1_4581x")
+region = Rect2(150, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_51yp8"]
+atlas = ExtResource("1_4581x")
+region = Rect2(300, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ka56p"]
+atlas = ExtResource("1_4581x")
+region = Rect2(450, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cku3u"]
+atlas = ExtResource("1_4581x")
+region = Rect2(600, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j6myc"]
+atlas = ExtResource("1_4581x")
+region = Rect2(750, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j3av4"]
+atlas = ExtResource("1_4581x")
+region = Rect2(900, 0, 150, 150)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c1gu4"]
+atlas = ExtResource("1_4581x")
+region = Rect2(1050, 0, 150, 150)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gi38d"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fpfe2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rqtuh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_51yp8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ka56p")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cku3u")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j6myc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j3av4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c1gu4")
+}],
+"loop": true,
+"name": &"flying",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rpqh1"]
+size = Vector2(50, 54.5)
+
+[node name="flyingObstacle" type="Area2D"]
+script = ExtResource("1_fpfe2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(-4, 4)
+sprite_frames = SubResource("SpriteFrames_gi38d")
+animation = &"flying"
+autoplay = "flying"
+frame_progress = 0.329731
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-21, 16.75)
+shape = SubResource("RectangleShape2D_rpqh1")

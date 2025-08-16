@@ -1,0 +1,74 @@
+[gd_scene load_steps=4 format=3 uid="uid://cjrw24agiwiml"]
+
+[ext_resource type="FontFile" uid="uid://cgyd7j2jcxom8" path="res://fonts/retro.ttf" id="1_ahhtf"]
+[ext_resource type="Shader" uid="uid://dalthyeex3ea" path="res://shaders/main.gdshader" id="2_oo0fn"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ysmq"]
+shader = ExtResource("2_oo0fn")
+shader_parameter/resolution = Vector2(320, 180)
+shader_parameter/scan_line_amount = 0.5
+shader_parameter/warp_amount = 0.05
+shader_parameter/vignette_amount = 0.5
+shader_parameter/vignette_intensity = 0.3
+shader_parameter/grille_amount = 0.05
+shader_parameter/brightness_boost = 1.2
+
+[node name="HUD" type="CanvasLayer"]
+
+[node name="HighScoreLabel" type="Label" parent="."]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -146.0
+offset_bottom = 45.0
+grow_horizontal = 0
+size_flags_horizontal = 4
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_ahhtf")
+theme_override_font_sizes/font_size = 35
+text = "HIGH SCORE:"
+horizontal_alignment = 1
+
+[node name="StartLabel" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.0
+offset_top = -22.5
+offset_right = 73.0
+offset_bottom = 22.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_ahhtf")
+theme_override_font_sizes/font_size = 35
+text = "PRESS SPACE TO PLAY"
+horizontal_alignment = 1
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_right = 40.0
+offset_bottom = 23.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_ahhtf")
+theme_override_font_sizes/font_size = 35
+text = "SCORE:"
+horizontal_alignment = 1
+
+[node name="SpeedLabel" type="Label" parent="."]
+offset_top = 45.0
+offset_right = 146.0
+offset_bottom = 90.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("1_ahhtf")
+theme_override_font_sizes/font_size = 35
+text = "SPEED:"
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+material = SubResource("ShaderMaterial_5ysmq")
+offset_top = -8.0
+offset_right = 1152.0
+offset_bottom = 640.0
+mouse_filter = 2

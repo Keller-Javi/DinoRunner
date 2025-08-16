@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cd7o73e61s28m"]
+
+[ext_resource type="Texture2D" uid="uid://c8hjett8d8f7m" path="res://sprites/obstacles/bush.png" id="1_wjb5x"]
+
+[node name="Bush" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-1, 2)
+scale = Vector2(4, 4)
+texture = ExtResource("1_wjb5x")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+scale = Vector2(4, 4)
+polygon = PackedVector2Array(-4.5, -11.25, -7.75, -11.25, -13.75, -4.5, -13, 12, 13.25, 12, 10.25, 2.25, 3.5, -5.5)
