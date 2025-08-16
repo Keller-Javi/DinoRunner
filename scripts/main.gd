@@ -10,6 +10,8 @@ var enemy_heights := [250, 385, 488] # ALTURA DE LOS ENEMIGOS
 
 const DINO_START_POS := Vector2i(155, 503)
 const CAM_START_POS := Vector2i(576, 324)
+
+const DIFICULTY_MODIFIER : int = 500 # Valor de prueba 100, valor para jugar 500
 var dificulty
 const MAX_DIFICULTY : int = 2
 var score : int 
@@ -17,8 +19,8 @@ const SCORE_MODIFIER : int = 100
 var high_score : int
 var speed : float
 const START_SPEED : float = 1000.0
-const MAX_SPEED : int = 1500
-const SPEED_MODIFIER : int = 100
+const MAX_SPEED : int = 2000
+const SPEED_MODIFIER : int = 500
 var screen_size : Vector2i
 var ground_height : int
 var game_running : bool
@@ -88,28 +90,34 @@ func _process(delta: float) -> void:
 			$HUD/StartLabel.hide()
 
 func generate_obs():
+	var cam_x = $Camera2D.position.x
+	var spawn_threshold = cam_x + screen_size.x - randi_range(1500, 2250)
 	# Generate ground obstacles
-	if obstacles.is_empty() or last_obs.position.x < score + randi_range(200, 400):
+	if obstacles.is_empty() or last_obs.position.x < spawn_threshold:
 		var obs_type = obstacles_types[randi() % obstacles_types.size()]
 		var obs
+		var obs_x : int
+		var obs_y : int
 		var max_obs = dificulty + 1 # Number of obstacles united in one
-		for i in range(randi()%max_obs + 1):
-			obs = obs_type.instantiate()
-			var obs_height = obs.get_node("Sprite2D").texture.get_height()
-			var obs_scale = obs.get_node("Sprite2D").scale
-			var cam_x = $Camera2D.position.x
-			var obs_x : int = cam_x + screen_size.x + 200 + (i * 100)
-			var obs_y : int = (screen_size.y - ground_height - (obs_height*obs_scale.y) + 5)
-			last_obs = obs
-			add_obs(obs, obs_x, obs_y)
-		# Additionally random chance to spawn a flying enemy
-		if dificulty == MAX_DIFICULTY:
-			if (randi()%2 == 0):
+		
+		# Random chance to spawn a flying enemy
+		if dificulty == MAX_DIFICULTY and randi()%8 == 0:
 				obs = flying_enemy_scene.instantiate()
-				var cam_x = $Camera2D.position.x
-				var obs_x : int = cam_x + screen_size.x + 200
-				var obs_y : int = enemy_heights[(randi()%enemy_heights.size())]
+				obs_x = cam_x + screen_size.x + 100
+				obs_y = enemy_heights[(randi()%enemy_heights.size())]
+				last_obs = obs
 				add_obs(obs, obs_x, obs_y)
+		else:
+			for i in range(randi()%max_obs + 1):
+				obs = obs_type.instantiate()
+				var obs_height = obs.get_node("Sprite2D").texture.get_height()
+				var obs_scale = obs.get_node("Sprite2D").scale
+				obs_x = cam_x + screen_size.x + 100 + (i * 100)
+				obs_y = (screen_size.y - ground_height - (obs_height*obs_scale.y) + 5)
+			
+				last_obs = obs
+				add_obs(obs, obs_x, obs_y)
+		
 
 func add_obs(obs,x,y):
 	obs.position = Vector2i(x, y)
@@ -132,11 +140,12 @@ func show_score():
 	$HUD/ScoreLabel.text = "SCORE: " + str(score / SCORE_MODIFIER)
 	var show_speed : int = 0
 	if speed != 0:
-		show_speed = clamp((100*(speed-START_SPEED)/MAX_SPEED), 1, 100)
+		show_speed = clamp(100 * (speed - START_SPEED) / (MAX_SPEED - START_SPEED), 1, 100)
 	$HUD/SpeedLabel.text = "SPEED: " + str(show_speed) + "%"
 
 func adjust_dificulty():
-	dificulty = clamp(score / (SPEED_MODIFIER*1000), 0, MAX_DIFICULTY)
+	dificulty = clamp(score / (SPEED_MODIFIER*DIFICULTY_MODIFIER), 0, MAX_DIFICULTY)
+	$HUD/DificultyLabel.text = "DIFICULTY: " + str(dificulty + 1)
 
 func check_high_score():
 	if score > high_score:
