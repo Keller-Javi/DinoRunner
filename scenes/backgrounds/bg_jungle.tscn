@@ -1,0 +1,58 @@
+[gd_scene load_steps=5 format=3 uid="uid://ctahi2lb6g065"]
+
+[ext_resource type="Texture2D" uid="uid://snvgqimfhx2c" path="res://sprites/parallax background/jungle/1.Backround.png" id="1_b6uaf"]
+[ext_resource type="Texture2D" uid="uid://be57xbk33u0ls" path="res://sprites/parallax background/jungle/2.Trees_back.png" id="2_deqrf"]
+[ext_resource type="Texture2D" uid="uid://p2hloim5xxr" path="res://sprites/parallax background/jungle/3.Trees_front.png" id="4_34awu"]
+[ext_resource type="Texture2D" uid="uid://wtghfrsmycc4" path="res://sprites/parallax background/Jungle_old/plx-5.png" id="5_n8qbb"]
+
+[node name="Bg_jungle" type="ParallaxBackground"]
+scale = Vector2(3, 3)
+transform = Transform2D(3, 0, 0, 3, 0, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("1_b6uaf")
+centered = false
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.1, 1)
+motion_mirroring = Vector2(384, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer"]
+texture_filter = 1
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("2_deqrf")
+centered = false
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="."]
+motion_scale = Vector2(0.2, 1)
+motion_mirroring = Vector2(384, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer2"]
+texture_filter = 1
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("4_34awu")
+centered = false
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="."]
+visible = false
+motion_scale = Vector2(0.3, 1)
+motion_mirroring = Vector2(384, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer3"]
+texture_filter = 1
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("4_34awu")
+centered = false
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="."]
+visible = false
+motion_scale = Vector2(0.4, 1)
+motion_mirroring = Vector2(384, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ParallaxLayer4"]
+texture_filter = 1
+scale = Vector2(1.2, 1.2)
+texture = ExtResource("5_n8qbb")
+centered = false

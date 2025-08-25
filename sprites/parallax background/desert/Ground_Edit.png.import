@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://x3370q3yredh"
-path="res://.godot/imported/plx-1.png-ee4a3f94574671b132a3e5a4bbd602b1.ctex"
+uid="uid://53sof6ykxctp"
+path="res://.godot/imported/Ground_Edit.png-7394ab45cee079ca9cded8d9a8cda244.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/parallax background/plx-1.png"
-dest_files=["res://.godot/imported/plx-1.png-ee4a3f94574671b132a3e5a4bbd602b1.ctex"]
+source_file="res://sprites/parallax background/desert/Ground_Edit.png"
+dest_files=["res://.godot/imported/Ground_Edit.png-7394ab45cee079ca9cded8d9a8cda244.ctex"]
 
 [params]
 

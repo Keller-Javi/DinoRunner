@@ -1,20 +1,38 @@
-[gd_scene load_steps=3 format=3 uid="uid://chad2m3s5ya7o"]
+[gd_scene load_steps=5 format=3 uid="uid://chad2m3s5ya7o"]
 
-[ext_resource type="Texture2D" uid="uid://be2pnosyn45y" path="res://sprites/ground.PNG" id="1_pybca"]
+[ext_resource type="Texture2D" uid="uid://o4wfxfiw30w3" path="res://sprites/parallax background/mountain/Ground_Edit.png" id="1_ly5mi"]
+[ext_resource type="Texture2D" uid="uid://53sof6ykxctp" path="res://sprites/parallax background/desert/Ground_Edit.png" id="2_mej4j"]
+[ext_resource type="Texture2D" uid="uid://b06km1qgywaxr" path="res://sprites/parallax background/jungle/Ground_Edit.png" id="3_4a7qg"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mi8v4"]
-size = Vector2(2304, 88)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ly5mi"]
+size = Vector2(2303.45, 72)
 
 [node name="Ground" type="StaticBody2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Mountain_Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 539)
+scale = Vector2(3.6, 2.5)
+texture = ExtResource("1_ly5mi")
+centered = false
+
+[node name="Desert_Sprite" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, 548)
+scale = Vector2(3.6, 2.933)
+texture = ExtResource("2_mej4j")
+centered = false
+
+[node name="Jungle_Sprite" type="Sprite2D" parent="."]
 z_index = 10
 texture_filter = 1
 position = Vector2(0, 560)
-scale = Vector2(3.63362, 2.933)
-texture = ExtResource("1_pybca")
+scale = Vector2(3.6, 1.93333)
+texture = ExtResource("3_4a7qg")
 centered = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(1152, 604)
-shape = SubResource("RectangleShape2D_mi8v4")
+z_index = 11
+position = Vector2(1152, 612)
+scale = Vector2(1.00024, 1)
+shape = SubResource("RectangleShape2D_ly5mi")

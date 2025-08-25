@@ -1,10 +1,9 @@
 extends Node
 
-var stump_scene = preload("res://scenes/obstacles/stump.tscn")
-var rock_scene = preload("res://scenes/obstacles/rock.tscn")
-var bush_scene = preload("res://scenes/obstacles/bush.tscn")
+var biome : int = 0
+
 var flying_enemy_scene = preload("res://scenes/obstacles/flyingObstacle.tscn")
-var obstacles_types := [stump_scene, rock_scene, bush_scene]
+var obstacles_types : Array
 var obstacles : Array
 var enemy_heights := [250, 385, 488] # ALTURA DE LOS ENEMIGOS
 
@@ -18,13 +17,33 @@ var score : int
 const SCORE_MODIFIER : int = 100
 var high_score : int
 var speed : float
-const START_SPEED : float = 1000.0
+const START_SPEED : float = 1250.0
 const MAX_SPEED : int = 2000
-const SPEED_MODIFIER : int = 500
+const SPEED_MODIFIER : int = 750
 var screen_size : Vector2i
 var ground_height : int
 var game_running : bool
 var last_obs
+
+func load_obstacles(biome_name):
+	var path = "res://scenes/obstacles/%s" % biome_name
+	var obstacles : Array = []
+	
+	var dir = DirAccess.open(path)
+	if dir:
+		dir.list_dir_begin()
+		var file_name = dir.get_next()
+		while file_name != "":
+			if file_name.ends_with(".tscn"):
+				var scene = load(path + "/" + file_name)
+				if scene:
+					obstacles.append(scene)
+			file_name = dir.get_next()
+		dir.list_dir_end()
+	else:
+		push_error("No se pudo abrir la carpeta: " + path)
+	
+	return obstacles
 
 func _ready() -> void:
 	# Load and update HUD of high score
@@ -33,9 +52,17 @@ func _ready() -> void:
 	
 	# Other inicializations
 	screen_size = get_window().size 
-	ground_height = $Ground.get_node("Sprite2D").texture.get_height()
+	
+	ground_height = $Ground/CollisionShape2D.shape.size.y
+	
 	$GameOver/Button.pressed.connect(new_game)
 	new_game()
+	
+	for folder_name in ["mountain", "jungle", "desert"]:
+		obstacles_types.append(load_obstacles(folder_name))
+	
+	print(obstacles_types)
+	print(obstacles_types[1])
 
 func new_game():
 	# Reset variables
@@ -62,6 +89,7 @@ func new_game():
 	
 	# Reset HUD
 	$HUD/StartLabel.show()
+	$HUD/DificultyLabel.text = "DIFFICULTY: 0"
 
 func _process(delta: float) -> void:
 	if game_running:
@@ -94,7 +122,8 @@ func generate_obs():
 	var spawn_threshold = cam_x + screen_size.x - randi_range(1500, 2250)
 	# Generate ground obstacles
 	if obstacles.is_empty() or last_obs.position.x < spawn_threshold:
-		var obs_type = obstacles_types[randi() % obstacles_types.size()]
+		var biome_type = obstacles_types[biome]
+		var obs_type = biome_type[randi() % biome_type.size()]
 		var obs
 		var obs_x : int
 		var obs_y : int
@@ -113,11 +142,10 @@ func generate_obs():
 				var obs_height = obs.get_node("Sprite2D").texture.get_height()
 				var obs_scale = obs.get_node("Sprite2D").scale
 				obs_x = cam_x + screen_size.x + 100 + (i * 100)
-				obs_y = (screen_size.y - ground_height - (obs_height*obs_scale.y) + 5)
+				obs_y = (screen_size.y - ground_height + 60 - (obs_height*obs_scale.y) + 5)
 			
 				last_obs = obs
 				add_obs(obs, obs_x, obs_y)
-		
 
 func add_obs(obs,x,y):
 	obs.position = Vector2i(x, y)
@@ -144,8 +172,8 @@ func show_score():
 	$HUD/SpeedLabel.text = "SPEED: " + str(show_speed) + "%"
 
 func adjust_dificulty():
-	dificulty = clamp(score / (SPEED_MODIFIER*DIFICULTY_MODIFIER), 0, MAX_DIFICULTY)
-	$HUD/DificultyLabel.text = "DIFICULTY: " + str(dificulty + 1)
+	dificulty = clamp(score / (SPEED_MODIFIER*DIFICULTY_MODIFIER/3), 0, MAX_DIFICULTY)
+	$HUD/DificultyLabel.text = "DIFFICULTY: " + str(dificulty + 1)
 
 func check_high_score():
 	if score > high_score:

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://wtghfrsmycc4"
-path="res://.godot/imported/plx-5.png-e952aa6099c90142a0226083f0d2e5b7.ctex"
+uid="uid://dj0bf5bn16lix"
+path="res://.godot/imported/3.Mountains.png-4e8ea87adf7c7662b2d787e64f51cbbc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/parallax background/plx-5.png"
-dest_files=["res://.godot/imported/plx-5.png-e952aa6099c90142a0226083f0d2e5b7.ctex"]
+source_file="res://sprites/parallax background/desert/3.Mountains.png"
+dest_files=["res://.godot/imported/3.Mountains.png-4e8ea87adf7c7662b2d787e64f51cbbc.ctex"]
 
 [params]
 
